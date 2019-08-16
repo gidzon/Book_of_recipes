@@ -21,7 +21,7 @@ use App\Recipe;
         // $recipe->actionRecipe();
     echo "<a href='recipe.php?id=$row->id'>рецепт</a>";
        
-    var_dump($row);
+    var_dump($test);
     ?>
 
 

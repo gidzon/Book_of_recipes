@@ -8,7 +8,7 @@ use PDO;
         private $description;
         private $text;
         public $id;
-
+        private $query;
         public function addRecipe()
         {
            $this->title = $_POST['title'];
@@ -31,11 +31,13 @@ use PDO;
             // global $row;
             $pdo = $pdo;
             $sql = 'SELECT * FROM recipe';
-             $query = $pdo->query($sql);
+             $this->query = $pdo->query($sql);
+            return $this->query->fetch(PDO::FETCH_OBJ);
             // while ($row = $query->fetch(PDO::FETCH_OBJ)){
-            //  echo $this->id = $row->id;
+            // //  return $row;
                
             // }
+            // return $test = 32;
             // return $row;
             
         }

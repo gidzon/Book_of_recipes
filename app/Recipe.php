@@ -31,8 +31,8 @@ use PDO;
             // global $row;
             $pdo = $pdo;
             $sql = 'SELECT * FROM recipe';
-             $this->query = $pdo->query($sql);
-            return $this->query->fetch(PDO::FETCH_OBJ);
+            return $query = $pdo->query($sql);
+            // return $query->fetch(PDO::FETCH_OBJ);
             // while ($row = $query->fetch(PDO::FETCH_OBJ)){
             // //  return $row;
                

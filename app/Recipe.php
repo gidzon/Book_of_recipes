@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-use \PDO;
+use PDO;
     class Recipe
     {
         
@@ -9,11 +9,12 @@ use \PDO;
         {
            
 
-                // $sql = "SELECT * FROM recipe WHERE id=?";
+                $sql = "SELECT * FROM recipe WHERE id=?";
 
-                $query = $pdo->prepare("SELECT * FROM recipe WHERE id=?");
+                $query = $pdo->prepare($sql);
                 $query->execute([$id]);
-        
+                return $query->fetch(PDO::FETCH_OBJ);
+                      
         }
 
         public function actionRecipe($pdo)

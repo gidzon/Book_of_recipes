@@ -20,6 +20,7 @@ use App\Recipe;
    
     <p><?php echo $result->title; ?></p>
     <p><?php echo $result->description; ?></p>
+  <?php  echo "<a href='recipe.php?id=$result->id' >подробнее</a>"; ?>
    
     
 <?php endforeach; ?>

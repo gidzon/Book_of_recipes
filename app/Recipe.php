@@ -4,11 +4,7 @@ namespace App;
 use PDO;
     class Recipe
     {
-        private $title;
-        private $description;
-        private $text;
-        public $id;
-        private $query;
+        
         public function addRecipe()
         {
            $this->title = $_POST['title'];
@@ -28,18 +24,15 @@ use PDO;
         public function actionRecipe($pdo)
         {
             
-            // global $row;
+            
             $pdo = $pdo;
             $sql = 'SELECT * FROM recipe';
-            return $query = $pdo->query($sql);
-            // return $query->fetch(PDO::FETCH_OBJ);
-            // while ($row = $query->fetch(PDO::FETCH_OBJ)){
-            // //  return $row;
-               
-            // }
-            // return $test = 32;
-            // return $row;
+             $query = $pdo->query($sql);
+             
+            return $row = $query->fetch(PDO::FETCH_OBJ);
+            
             
         }
+        
         
     }

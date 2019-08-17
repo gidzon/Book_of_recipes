@@ -4,7 +4,7 @@ include __DIR__.'/config/bd.php';
 use App\Recipe;
 
     $recipe = new Recipe();
-    $recipe->actionRecipe($pdo);
+   $test = $recipe->actionRecipe($pdo);
 
 ?>
 <!DOCTYPE html>
@@ -16,13 +16,13 @@ use App\Recipe;
     <title>Книга рецептов</title>
 </head>
 <body>
-    <?php
-       
-        // $recipe->actionRecipe();
-    echo "<a href='recipe.php?id=$row->id'>рецепт</a>";
-       
-    var_dump($test);
-    ?>
+   
+   
+    <p><?php echo $test->title; ?></p>
+   
+    
+
+
 
 
 </body>

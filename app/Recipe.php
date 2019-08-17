@@ -29,7 +29,7 @@ use PDO;
             $sql = 'SELECT * FROM recipe';
              $query = $pdo->query($sql);
              
-            return $row = $query->fetch(PDO::FETCH_OBJ);
+            return $query->fetchAll(PDO::FETCH_OBJ);
             
             
         }

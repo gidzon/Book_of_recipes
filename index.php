@@ -16,12 +16,13 @@ use App\Recipe;
     <title>Книга рецептов</title>
 </head>
 <body>
+   <?php foreach ($test as $result): ?>
    
-   
-    <p><?php echo $test->title; ?></p>
+    <p><?php echo $result->title; ?></p>
+    <p><?php echo $result->description; ?></p>
    
     
-
+<?php endforeach; ?>
 
 
 

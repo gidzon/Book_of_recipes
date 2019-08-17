@@ -1,31 +1,26 @@
 <?php
 namespace App;
 
-use PDO;
+use \PDO;
     class Recipe
     {
         
-        public function addRecipe()
+        public function showRecipe($pdo, $id)
         {
-           $this->title = $_POST['title'];
-           $this->description = $_POST['description'];
-           $this->text = $_POST['text'];
+           
 
-                $sql = "INSERT INTO recipe (title, description, text) 
-                VALUES(?,?,?)";
+                // $sql = "SELECT * FROM recipe WHERE id=?";
 
-                $query = $pdo-prepare($sql);
-                $query->execute($this->title, $this->description, $this->text);
-
-
-
+                $query = $pdo->prepare("SELECT * FROM recipe WHERE id=?");
+                $query->execute([$id]);
+        
         }
 
         public function actionRecipe($pdo)
         {
             
             
-            $pdo = $pdo;
+            
             $sql = 'SELECT * FROM recipe';
              $query = $pdo->query($sql);
              

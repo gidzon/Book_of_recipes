@@ -7,8 +7,7 @@
 
     $showRecipe = new Recipe();
     $Show = $showRecipe->showRecipe($pdo, $id);
-    var_dump($Show);
-?>
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

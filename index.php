@@ -1,6 +1,6 @@
 <?php 
 include 'vendor/autoload.php';
-include __DIR__.'/config/bd.php';
+include __DIR__.'/config/config.php';
 
 use App\Recipe;
 
@@ -13,7 +13,19 @@ use App\Recipe;
 <?php include 'blocs/header.php'; ?>
 <body>
    <header>
-         <a href="form.html">вход</a>
+   <?php 
+      if (!$_SESSION['auth'] == true or !$_SESSION['avtorization'] == true):
+   ?>
+         <a href="/form/reg.php">Регистрация</a>
+         <a href="/form/auth.php">Авторизация</a>
+         <?php 
+            else:
+         ?>
+            <a href="recipe.php">Добавить рецепт</a>
+            <a href="exit.php">Выход</a>
+         <?php 
+            endif;
+         ?>
    </header>
    <?php foreach ($test as $result): ?>
       <div class="container-fluid">

@@ -7,7 +7,7 @@ use App\User;
 
 
 
-if ($_SESSION['auth']){
+if (!empty($_SESSION['auth'])){
     $exitUser = new User();
     $exitUser->exitUser();
 

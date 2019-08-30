@@ -73,7 +73,6 @@ use PDO;
                 if (password_verify($pass, $hash) == true){
                     
                     $_SESSION['auth'] = $user->id;
-                    var_dump($_SESSION['auth']);
                     
                 }
             }

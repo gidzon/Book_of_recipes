@@ -31,7 +31,7 @@ use PDO;
                 $query->execute([$login, $hash, $name]);
                 
 
-                $_SESSION['auth'] = true;
+                $_SESSION['auth'] = $user->id;
 
                 $sql = "SELECT id, name FROM user WHERE login=?";
                 $query = $pdo->prepare($sql);
@@ -50,8 +50,8 @@ use PDO;
         // Выход из учетной записи
         public function exitUser()
         {
-            // session_destroy();
-            unset($_SESSION['auth']);
+            session_destroy();
+            
         }
 
         public function authorization($pdo)
@@ -66,16 +66,15 @@ use PDO;
             
             
 
-            if ($user){
+            if (!empty($user)){
                 $hash = $user->password;
                 
-
-                if (password_verify($pass, $hash)){
-                    $_SESSION['save_user'] = true;
-                    var_dump($_SESSION['save_user']);
+                
+                if (password_verify($pass, $hash) == true){
                     
-                } else {
-                    exit;
+                    $_SESSION['auth'] = $user->id;
+                    var_dump($_SESSION['auth']);
+                    
                 }
             }
         }

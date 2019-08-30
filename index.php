@@ -14,7 +14,7 @@ use App\Recipe;
 <body>
    <header>
    <?php 
-      if (!$_SESSION['auth'] == true or !$_SESSION['avtorization'] == true):
+      if (!empty($_SESSION['auth'])):
    ?>
          <a href="/form/reg.php">Регистрация</a>
          <a href="/form/auth.php">Авторизация</a>

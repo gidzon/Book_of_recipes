@@ -8,7 +8,7 @@
 </head>
 <body>
         <?php 
-            if (!$_SESSION['save_user'] == true):
+            if (empty($_SESSION['auth'])):
         ?>
     <form action="../auth.php" method="POST">
         <input name="login" placeholder="введите логин">
@@ -16,6 +16,12 @@
         <!-- <input name="confirm" type="password" placeholder="повторите пароль"> -->
         <input type="submit" value="Отправить">
     </form> 
+
+        <?php 
+            else:
+        ?>
+        <a href="exit.php">Выход</a>
+        <a href="/">Главная</a>
         <?php 
             endif;
         ?>

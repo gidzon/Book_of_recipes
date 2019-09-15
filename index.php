@@ -6,13 +6,13 @@ use App\Recipe;
 
    $recipe = new Recipe();
    $test = $recipe->actionRecipe($pdo);
-
-?>
+   ?>
 <!DOCTYPE html>
 <html lang="en">
-<?php include 'blocs/header.php'; ?>
 <body>
    <header>
+   <?php include 'blocs/header.php'; ?>
+   <title>Книга рецептов</title>
    <?php 
       if (empty($_SESSION['auth'])):
    ?>
@@ -21,7 +21,7 @@ use App\Recipe;
          <?php 
             else:
          ?>
-            <a href="recipe.php">Добавить рецепт</a>
+            <?php echo "<a href=recipe.php?id={$result->id}>Добавить рецепт</a>"?>
             <a href="exit.php">Выход</a>
          <?php 
             endif;

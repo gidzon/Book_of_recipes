@@ -16,13 +16,25 @@ use App\Recipe;
    <?php 
       if (empty($_SESSION['auth'])):
    ?>
-         <a href="/form/reg.php">Регистрация</a>
-         <a href="/form/auth.php">Авторизация</a>
+      <div>
+         <ul class="nav navbar-nav">
+            <div class="container-fluid">
+               <li class="active"><a href="/form/reg.php">Регистрация</a></li>
+               <li><a href="/form/auth.php">Авторизация</a></li>
+            </div>
+         </ul>
+      </div>
          <?php 
             else:
          ?>
-            <?php echo "<a href=recipe.php?id={$result->id}>Добавить рецепт</a>"?>
-            <a href="exit.php">Выход</a>
+         
+            <nav class="nav navbar-nav">
+               <div class="container-fluid">
+                  <li class="active"><?php echo "<a href=add.php>Добавить рецепт</a>"?></li>
+                     <li><a href="exit.php">Выход</a></li>
+               </div>
+            </nav>
+         
          <?php 
             endif;
          ?>

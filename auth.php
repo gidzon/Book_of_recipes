@@ -9,7 +9,7 @@ $auth = new User();
 $auth->authorization($pdo);
 
 if (!empty($_SESSION['auth'])){
-    echo '<a href="recipe.php">Добавить рецепт</a></br>
+    echo '<a href="add.php">Добавить рецепт</a></br>
         <a href="exit.php">Выход</a></br>
         <a href="/">Главная</a>';
 } else {

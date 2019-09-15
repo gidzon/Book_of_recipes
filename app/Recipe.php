@@ -4,12 +4,12 @@ namespace App;
 use PDO;
     class Recipe
     {
-        
+        private $id;
         // метод выводит заголовок и текст рецепта
         public function showRecipe($pdo)
         {
            
-                $id = $_GET['id'];
+                $this->id  = $_GET['id'];
                 $sql = "SELECT title, text
                 FROM recipe 
                 WHERE id = ?";
@@ -48,20 +48,58 @@ use PDO;
         // Добавление рецепта в базу данных
         public function addRecipe($pdo)
         {
-            
+            $title = $_POST['title'];
+            $text = $_POST['text'];
+
             $sql = "INSERT INTO recipe (title, text)
-            VALUES (?,?,?)";
+            VALUES (?,?)";
             $query = $pdo->prepare($sql);
             $query->execute([$title, $text]);
 
         }
         // Добавление ингредиентов в базу данных
-        public function addIngredient($pdo, $name, $amount, $dimension_value)
+        public function addIngredient($pdo)
         {
-            $sql = "INSERT INTO ingredient (name, amount, dimension_value)
-            VALUES (?,?,?)";
+            $name = $_POST['name'];
+            $amount = $_POST['amount'];
+            $dimensionValue = $_POST['dimension_value'];
+
+            $name[] = $name;
+            
+            foreach ($name as $result){
+                
+            }
+            
+            $sql = "SELECT id FROM ingredient WHERE name = ?";            
             $query = $pdo->prepare($sql);
-            $query->execute([$name, $amount, $dimension_value]);
+            $query->exeсute([$name]);
+            while ($row = $query->fetchAll(PDO::FETCH_OBJ)){
+               $name = $row;
+            }
+
+            if (!empty($name)){
+                foreach ($name as $row){
+                    $sql = "INSERT INTO recipe__ingredient (id_ingredient, id_recipe)
+                    VAlUES (?,?)";
+                    $query = $pdo->prepare($sql);
+                    $query->execute([$row, $this->id = $_GET['id']]);
+                }
+            } else {
+                $sql = "INSERT INTO ingredient (name, amount, dimension_value)
+                VALUES (?,?,?)";
+                $query = $pdo->prepare($sql);
+                $query->execute([$name, $amount, $dimensionValue]);
+
+            }
+
+            // if (empty($name)){
+            //     $sql = "INSERT INTO ingredient (name, amount, dimension_value)
+            //     VALUES (?,?,?)";
+            //     $query = $pdo->prepare($sql);
+            //     $query->execute([$name, $amount, $dimensionValue]);
+            // }
+
+            
         }
 
         

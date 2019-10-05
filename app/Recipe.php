@@ -4,7 +4,7 @@ namespace App;
 use PDO;
     class Recipe
     {
-        private $id;
+        
         // метод выводит заголовок и текст рецепта
         public function showRecipe($pdo)
         {
@@ -50,59 +50,118 @@ use PDO;
         {
             $title = $_POST['title'];
             $text = $_POST['text'];
-
-            $sql = "INSERT INTO recipe (title, text)
-            VALUES (?,?)";
+            
+            $sql = "SELECT id FROM recipe WHERE title = ?";
             $query = $pdo->prepare($sql);
-            $query->execute([$title, $text]);
+            $query->execute([$title]);
+            $titleRecipe = $query->fetch();
+            
 
+            if (empty($titleRecipe))
+            {   
+                foreach ($title as $result)
+                {
+                    $sql = "INSERT INTO recipe (title)
+                    VALUES (?)";
+                    $query = $pdo->prepare($sql);
+                    $query->execute([$result]);
+                }
+
+                foreach ($text as $value)
+                {
+                    $sql = "INSERT INTO recipe (text)
+                    VALUES (?)";
+                    $query = $pdo->prepare($sql);
+                    $query->execute([$value]);
+                }
+                } else
+            {
+                exit('Такой рецепт уже есть');
+                
+            }
+        }
+
+        public function copyIdRecipeId($pdo)
+        {
+            $title = $_POST['title'];
+            $idNameIng = $_POST['ingredient'];
+            
+
+            
+            foreach ($title as $value)
+            {
+                $sql = "SELECT id FROM recipe WHERE title = ?";
+                $query = $pdo->prepare($sql);
+                $query->execute([$value]);
+                $idRecipe = $query->fetchAll();
+
+                foreach ($idRecipe as $id)
+                {
+                    $sql = "INSERT INTO recipe__ingredient (id_recipe) VALUES (?)";
+                    $result = $pdo->prepare($sql);
+                    $result->execute([$id]);
+                }
+                
+            }
+
+            foreach ($idNameIng as $id)
+            {
+                $sql = "SELECT id FROM ingredient WHERE id = ?";
+                $idIng = $pdo->prepare($sql);
+                $idIng->execute([$id]);
+                $result = $idIng->fetchAll();
+
+                foreach ($result as $value)
+                {
+                    $sql = "INSERT INTO recipe__ingredient (id_ingredient) VALUES (?)";
+                    $addIdIng = $pdo->prepare($sql);
+                    $addIdIng->execute([$value]);
+                }
+                
+            }
+        }
+
+        public function idIngredientRecipe($pdo)
+        {
+            $sql ="SELECT id, name FROM ingredient";
+            $query = $pdo->query($sql);
+            return $query->fetchAll(PDO::FETCH_OBJ);
         }
         // Добавление ингредиентов в базу данных
         public function addIngredient($pdo)
         {
-            $name = $_POST['name'];
-            $amount = $_POST['amount'];
-            $dimensionValue = $_POST['dimension_value'];
-
-            $name[] = $name;
+            $titleIng = $_POST["ingredient"];
+            $descriptionIng = $_POST["ing_description"];
             
-            foreach ($name as $result){
-                
-            }
             
-            $sql = "SELECT id FROM ingredient WHERE name = ?";            
-            $query = $pdo->prepare($sql);
-            $query->exeсute([$name]);
-            while ($row = $query->fetchAll(PDO::FETCH_OBJ)){
-               $name = $row;
-            }
+            foreach($titleIng as $value)
+            {  
+                $sql = "INSERT INTO ingredient (name) VALUES (?)";
+                $addTitleIng = $pdo->prepare($sql);
+                $addTitleIng->execute([$value]);
 
-            if (!empty($name)){
-                foreach ($name as $row){
-                    $sql = "INSERT INTO recipe__ingredient (id_ingredient, id_recipe)
-                    VAlUES (?,?)";
-                    $query = $pdo->prepare($sql);
-                    $query->execute([$row, $this->id = $_GET['id']]);
-                }
-            } else {
-                $sql = "INSERT INTO ingredient (name, amount, dimension_value)
-                VALUES (?,?,?)";
+                $sql = "SELECT id FROM ingredient WHERE title = ?";
                 $query = $pdo->prepare($sql);
-                $query->execute([$name, $amount, $dimensionValue]);
+                $query->execute([$value]);
+                $result = $query->fetchAll();
+
+                foreach($result as $idIng)
+                {
+                    $sql = "INSERT INTO ing__description (id_ingredient) VALUES (?)";
+                    $query = $pdo->prepare($sql);
+                    $query->execute([$idIng]);
+                }
+                    
+                    foreach($descriptionIng as $descrip)
+                {   $sql = "INSERT INTO ing__description (description) VALUES (?)";
+                    $addDescriptionIng = $pdo->prepare($sql);
+                    $addDescriptionIng->execute([$descrip]);
+                }
 
             }
 
-            // if (empty($name)){
-            //     $sql = "INSERT INTO ingredient (name, amount, dimension_value)
-            //     VALUES (?,?,?)";
-            //     $query = $pdo->prepare($sql);
-            //     $query->execute([$name, $amount, $dimensionValue]);
-            // }
-
             
-        }
 
-        
-        
-        
+        }
+ 
     }

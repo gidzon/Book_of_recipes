@@ -5,7 +5,7 @@ include __DIR__.'/config/config.php';
 use App\Recipe;
 
    $recipe = new Recipe();
-   $test = $recipe->actionRecipe($pdo);
+   $recipe->actionRecipe($pdo);
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,12 +39,12 @@ use App\Recipe;
             endif;
          ?>
    </header>
-   <?php foreach ($test as $result): ?>
+   <?php foreach ($recipe as $result): ?>
       <div class="container-fluid">
          <div class="row">
             <div class="col-md-6">
                <h1><?php echo $result->title; ?></h1>
-               <?php echo $result->description; ?>
+               <?php echo $result->text; ?>
             
   <?php  echo "<a href='recipe.php?id=$result->id' >подробнее</a>"; ?>
             </div>

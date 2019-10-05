@@ -8,7 +8,7 @@
 </head>
 <body>
 <?php
-    if (!$_SESSION['auth'] == true):
+    if (empty($_SESSION['auth'])):
 ?>
     <form action="../reg.php" method="POST">
         <input type="text" name="name" placeholder="введите имя">

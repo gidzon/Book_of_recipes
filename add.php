@@ -1,26 +1,33 @@
 <?php
-    
-?>
+   include 'vendor/autoload.php';
+   include __DIR__.'/config/config.php';
+   include 'blocs/header.php';
+   
+   use App\Recipe;
+
+   $ing = new Recipe();
+   $idIng = $ing->idIngredientRecipe($pdo);
+   ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include 'blocs/header.php';?>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="../js/main.js"></script>
     <title>Добавить рецепт</title>
 </head>
 <body>
-            <div >
-                Рецепт
-                <form action="addRecipe.php" method="POST">
-                    <input type="text" name="title" placeholder="Заголовок рецепта">
-                    <textarea name="text" placeholder="Текст рецепта"></textarea>
-                </form>
-                Ингредиенты
-                <form action="addRecipe.php" method="POST">
-                    <input type="text" name="name" placeholder="Название ингредиента">
-                    <input type="text" name="amount" placeholder="Количество ингредиента">
-                    <input type="text" name="dimension_value" placeholder="Мера, например кг, шт">
-                    <input type="submit" value="отправить">
-                </form>
-        </div>
-</body>
+    <header><a href="ingForm.php">Добавить ингредиент</a></header>
+    <form action="addRecipe.php" method="post" name="recipe">
+        <p><input type='text' name='title' id='title' placeholder='Заголовок рецепта'></p>
+        <p><textarea name='text' id='text'  cols='30' rows='10' placeholder='Введите описание рецепта'></textarea></p>
+    <select name="ingredient[]" size="5" multiple="multiple">
+            <?php foreach ($idIng as $result): ?>
+                <p><option value="<?php echo $result->id;?>"><?php echo $result->name; ?></option></p>
+            <?php endforeach; ?>
+            </select>
+
+            <input type="submit" value="отправить">
+    </form>
+    <input type="button" id="button" value="добавить поле">
+   </body>
 </html>

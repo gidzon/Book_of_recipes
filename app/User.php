@@ -16,10 +16,11 @@ use PDO;
             $hash = password_hash($pass, PASSWORD_DEFAULT);
             
 
-            $sql = "SELECT * FROM user WHERE login= ?";
+            $sql = "SELECT id FROM user WHERE login= ?";
             $query = $pdo->prepare($sql);
             $query->execute([$login]);
             $user = $query->fetch(PDO::FETCH_OBJ);
+            
             
             
             
@@ -29,9 +30,6 @@ use PDO;
                 VALUES (?,?,?)";
                 $query = $pdo->prepare($sql);
                 $query->execute([$login, $hash, $name]);
-                
-
-                $_SESSION['auth'] = $user->id;
 
                 $sql = "SELECT id, name FROM user WHERE login=?";
                 $query = $pdo->prepare($sql);
@@ -39,6 +37,8 @@ use PDO;
                 $result = $query->fetch(PDO::FETCH_OBJ);
                 $id = $result->id;
                 $name = $result->name;
+
+                $_SESSION['auth'] = $id;
 
                 $_SESSION['user_name'] = $name;
                 } else {

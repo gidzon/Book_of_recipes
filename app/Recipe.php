@@ -59,21 +59,10 @@ use PDO;
 
             if (empty($titleRecipe))
             {   
-                foreach ($title as $result)
-                {
-                    $sql = "INSERT INTO recipe (title)
-                    VALUES (?)";
-                    $query = $pdo->prepare($sql);
-                    $query->execute([$result]);
-                }
-
-                foreach ($text as $value)
-                {
-                    $sql = "INSERT INTO recipe (text)
-                    VALUES (?)";
-                    $query = $pdo->prepare($sql);
-                    $query->execute([$value]);
-                }
+                $sql = "INSERT INTO recipe (title, text)
+                VALUES (?,?)";
+                $query = $pdo->prepare($sql);
+                $query->execute([$title, $text]);
                 } else
             {
                 exit('Такой рецепт уже есть');
@@ -87,37 +76,14 @@ use PDO;
             $idNameIng = $_POST['ingredient'];
             
 
-            
-            foreach ($title as $value)
+            if (!empty($idNameIng))
             {
-                $sql = "SELECT id FROM recipe WHERE title = ?";
+                $sql = "SELECT id INTO recipe__ingredient FROM recipe WHERE title = ?
+                UNION SELECT id INTO recipe__ingredient FROM ingredient WHERE id = ?";
                 $query = $pdo->prepare($sql);
-                $query->execute([$value]);
-                $idRecipe = $query->fetchAll();
-
-                foreach ($idRecipe as $id)
-                {
-                    $sql = "INSERT INTO recipe__ingredient (id_recipe) VALUES (?)";
-                    $result = $pdo->prepare($sql);
-                    $result->execute([$id]);
-                }
-                
-            }
-
-            foreach ($idNameIng as $id)
-            {
-                $sql = "SELECT id FROM ingredient WHERE id = ?";
-                $idIng = $pdo->prepare($sql);
-                $idIng->execute([$id]);
-                $result = $idIng->fetchAll();
-
-                foreach ($result as $value)
-                {
-                    $sql = "INSERT INTO recipe__ingredient (id_ingredient) VALUES (?)";
-                    $addIdIng = $pdo->prepare($sql);
-                    $addIdIng->execute([$value]);
-                }
-                
+                $query->execute([$title, $idNameIng]);
+            }else{
+                return $error = 1;
             }
         }
 
@@ -132,36 +98,32 @@ use PDO;
         {
             $titleIng = $_POST["ingredient"];
             $descriptionIng = $_POST["ing_description"];
+
             
             
-            foreach($titleIng as $value)
-            {  
+            $sql = "SELECT id FROM ingredient WHERE title = ?";
+            $addTitleIng = $pdo->prepare($sql);
+            $addTitleIng->execute([$titleIng]);
+            $result = $addTitleIng->fetchAll();
+
+            if (empty($result))
+            {
                 $sql = "INSERT INTO ingredient (name) VALUES (?)";
-                $addTitleIng = $pdo->prepare($sql);
-                $addTitleIng->execute([$value]);
+                $query = $pdo->prepare($sql);
+                $query->execute([$titleIng]);
 
                 $sql = "SELECT id FROM ingredient WHERE title = ?";
+                $result = $pdo->prepare($sql);
+                $result->execute([$titleIng]);
+                $getIdIng = $result->fetchAll();
+
+                $sql = "INSERT INTO ing__description (id_ingredient, description) VALUES (?, ?)";
                 $query = $pdo->prepare($sql);
-                $query->execute([$value]);
-                $result = $query->fetchAll();
-
-                foreach($result as $idIng)
-                {
-                    $sql = "INSERT INTO ing__description (id_ingredient) VALUES (?)";
-                    $query = $pdo->prepare($sql);
-                    $query->execute([$idIng]);
-                }
-                    
-                    foreach($descriptionIng as $descrip)
-                {   $sql = "INSERT INTO ing__description (description) VALUES (?)";
-                    $addDescriptionIng = $pdo->prepare($sql);
-                    $addDescriptionIng->execute([$descrip]);
-                }
-
+                $addTitleIng = $query->execute([$getIdIng, $descriptionIng]);
+            }else{
+                return $error = 1;
             }
-
             
-
         }
  
     }

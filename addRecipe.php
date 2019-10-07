@@ -9,4 +9,11 @@
     $recipe->addRecipe($pdo);
     $idRecipe = new Recipe();
     $idRecipe->copyIdRecipeId($pdo);
-    // var_dump($_POST);
+    
+    if (!$idRecipe == 1)
+    {
+        echo "Не добавлены ингредиенты</br>
+        <a href='ingForm.php'>Добавить ингредиент</a>";
+    }else{
+        echo "<a href='/'>На главную</a>";
+    }

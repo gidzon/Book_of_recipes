@@ -15,8 +15,8 @@
 </head>
 <body>
     <form action="ingAdd.php" method="post" name="ing">
-        <p><input type="text" name="ingredient[]" id="name" placeholder="Название ингредиента"></p>
-        <p><textarea name="ing_description[]" id="description" cols="30" rows="10" placeholder="Описание ингредиента, кг, шт, количество "></textarea></p>
+        <p><input type="text" name="ingredient" id="name" placeholder="Название ингредиента"></p>
+        <p><textarea name="ing_description" id="description" cols="30" rows="10" placeholder="Описание ингредиента, кг, шт, количество "></textarea></p>
         <input type="submit" value="отправить">
     </form>
     <input type="button" id="add_input" value="добавить поле">
